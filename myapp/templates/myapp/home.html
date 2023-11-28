@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'myapp/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
+    <title>Image Uploader</title>
+</head>
+<body>
+    
+    <br>
+    <div class="container">
+        <div class="py-5 text-center bg-secondary text-white">
+            <h1 class='text-center mb-3'>Simple Image Handler Through Django.</h1>
+            <form action="" method="post" enctype = 'multipart/form-data' novalidate>
+                {% csrf_token %}
+                {{form}}
+                <input type="submit" class='btn btn-danger' value="Upload">
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    <span class='text text-warning'>{{message}}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        {% for im in img %}
+            <div class="col-sm-4">
+                <div class="card m-2">
+                    <img src="{{im.photo.url}}" alt="" class='card-img-top'>
+                    <a href="{% url 'del' im.id %}" class='text-center'><input type="button" value="Delete" class='btn btn-warning btn-block'></a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script src="{% static 'myapp/jquery.js' %}"></script>
+    <script src="{% static 'myapp/popper.js' %}"></script>
+    <script src="{% static 'myapp/bootstrap.js' %}"></script>
+</body>
+</html>
